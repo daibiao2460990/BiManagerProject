@@ -1,0 +1,46 @@
+POST http://192.168.1.7:8084/bi/project/create?project_name=Test02&template_idx=2
+Accept: */*
+Cache-Control: no-cache
+###
+POST http://192.168.1.7:8084/bi/project/db/data?project_id=Test02&dialect=mysql&database=dccp&host=192.168.1.7&port=3306&user=root&password=root&sql=select * from database_source
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://192.168.1.7:8084/bi/project/preview?project_id=bitest01&file_id=null&limit=100
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://192.168.1.7:8084/bi/project/db/alldata?project_id=bitest01&file_id=000
+Accept: */*
+Cache-Control: no-cache
+
+
+###
+GET http://192.168.1.7:8084/bi/feature/list?project_id=bitest01
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://192.168.1.7:8084/bi/worksheet/features
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "project_id": "bitest01",
+  "worksheet_id": "d477df361a3311ea9660d89ef3787a2c",
+  "features": {"x":[{"name":"Sex"},
+    {"name":"Embarked"}],
+    "y":[{"feature":{"name":"Age","legend":"SUM",
+      "color":{"name":"Pclass","legend":"SUM"},
+      "labels":[{"name":"Survived","legend":"SUM"},
+        {"name":"Parch","legend":"SUM"},
+        {"name":"Pclass","legend":"SUM"}]}},
+      {"feature":{"name":"SibSp","legend":"SUM"}}]}
+}
+###

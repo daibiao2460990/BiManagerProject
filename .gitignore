@@ -1,0 +1,4 @@
+# Project exclude paths
+/BISPServer/target/
+/CommonResouces/target/
+/EurekaServer/target/

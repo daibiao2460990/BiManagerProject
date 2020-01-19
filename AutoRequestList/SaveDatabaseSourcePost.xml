@@ -1,0 +1,62 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list />
+  </option>
+  <option name="httpMethod" value="POST" />
+  <option name="urlBase" value="http://localhost:8084" />
+  <option name="urlPath" value="/bi/project/db/data" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="*/*" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="project_id" />
+        <option name="value" value="Test02" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="dialect" />
+        <option name="value" value="mysql" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="database" />
+        <option name="value" value="dccp" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="host" />
+        <option name="value" value="localhost" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="port" />
+        <option name="value" value="3306" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="user" />
+        <option name="value" value="root" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="password" />
+        <option name="value" value="root" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="sql" />
+        <option name="value" value="select * from database_source" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="true" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value="{   &quot;project_id&quot;: &quot;BiTest&quot;,   &quot;worksheet_id&quot;: &quot;d477df361a3311ea9660d89ef3787a2c&quot;,   &quot;features&quot;: {&quot;x&quot;:[{&quot;name&quot;:&quot;Sex&quot;},     {&quot;name&quot;:&quot;Embarked&quot;}],     &quot;y&quot;:[{&quot;feature&quot;:{&quot;name&quot;:&quot;Age&quot;,&quot;legend&quot;:&quot;SUM&quot;,       &quot;color&quot;:{&quot;name&quot;:&quot;Pclass&quot;,&quot;legend&quot;:&quot;SUM&quot;},       &quot;labels&quot;:[{&quot;name&quot;:&quot;Survived&quot;,&quot;legend&quot;:&quot;SUM&quot;},         {&quot;name&quot;:&quot;Parch&quot;,&quot;legend&quot;:&quot;SUM&quot;},         {&quot;name&quot;:&quot;Pclass&quot;,&quot;legend&quot;:&quot;SUM&quot;}]}},       {&quot;feature&quot;:{&quot;name&quot;:&quot;SibSp&quot;,&quot;legend&quot;:&quot;SUM&quot;}}]} }" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>

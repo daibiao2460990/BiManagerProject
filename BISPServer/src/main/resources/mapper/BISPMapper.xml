@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.datacube.mapper.BISPMapper">
+   <resultMap id="BaseResultMap" type="com.datacube.pojo.DatabaseSource" >
+       <!-- <id column="id" property="id" jdbcType="INTEGER" />-->
+      <!-- property对应实体类的属性名称，column为数据库字段名 -->
+      <result column="file_id" property="file_id" jdbcType="VARCHAR" />
+      <result column="project_id" property="project_id" jdbcType="VARCHAR" />
+      <result column="dialect" property="dialect" jdbcType="VARCHAR" />
+      <result column="database" property="database" jdbcType="VARCHAR" />
+      <result column="host" property="host" jdbcType="VARCHAR" />
+      <result column="port" property="port" jdbcType="INTEGER" />
+      <result column="user" property="user" jdbcType="VARCHAR" />
+      <result column="password" property="password" jdbcType="VARCHAR" />
+      <result column="sql" property="sql" jdbcType="VARCHAR" />
+      <result column="insert_time" property="insert_time" jdbcType="TIMESTAMP" />
+   </resultMap>
+    <resultMap id="BIWorksheetMap" type="com.datacube.pojo.BiWorksheet" >
+        <!-- <id column="id" property="id" jdbcType="INTEGER" />-->
+        <!-- property对应实体类的属性名称，column为数据库字段名 -->
+        <result column="worksheet_id" property="worksheet_id" jdbcType="VARCHAR" />
+        <result column="project_id" property="project_id" jdbcType="VARCHAR" />
+        <result column="worksheet_idx" property="worksheet_idx" jdbcType="INTEGER" />
+        <result column="worksheet_name" property="worksheet_name" jdbcType="VARCHAR" />
+        <result column="worksheet_titlte" property="worksheet_titlte" jdbcType="VARCHAR" />
+        <result column="worksheet_titlte_css" property="worksheet_titlte_css" jdbcType="LONGVARCHAR" />
+        <result column="worksheet_type" property="worksheet_type" jdbcType="CHAR" />
+        <result column="worksheet_subtype" property="worksheet_subtype" jdbcType="CHAR" />
+        <result column="legends" property="legends" jdbcType="LONGVARCHAR" />
+        <result column="features" property="features" javaType="com.datacube.pojo.Features.Features"
+                jdbcType="LONGVARCHAR" typeHandler="com.datacube.pojo.JSONHandler" />
+        <result column="css" property="css" jdbcType="LONGVARCHAR" />
+        <result column="insert_user" property="insert_user" jdbcType="VARCHAR" />
+        <result column="insert_time" property="insert_time" jdbcType="TIMESTAMP" />
+        <result column="update_user" property="update_user" jdbcType="VARCHAR" />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="update_time" jdbcType="VARCHAR" />
+    </resultMap>
+
+    
+    <insert id="saveProjectInfo" parameterType="com.datacube.pojo.CreateProject">
+        insert into project values (#{project_id},#{project_name},null,null,null,null,null,null,null,null,null,null,null,null,null,#{template_idx})
+    </insert>
+    
+    <insert id="databaseSourceSave" parameterType="com.datacube.pojo.DatabaseSource">
+       insert into database_source values
+       (#{file_id},#{project_id},#{dialect},#{database},#{host},#{port},#{user},#{password},#{sql},#{insert_time})
+    </insert>
+   
+    <select id="databaseSourceQuery" parameterType="com.datacube.pojo.DatabaseSource" resultMap="BaseResultMap">
+       select * from database_source where project_id=#{project_id}
+    </select>
+
+    <insert id="biFeatureSave" parameterType="com.datacube.pojo.featurelist.Feature_list">
+        insert into bi_feature values
+        (#{project_id},null,#{feature_name},#{data_type},#{unique_num},null,null,null,null)
+    </insert>
+
+    <insert id="biWorksheetSave" parameterType="com.datacube.pojo.BiWorksheet" >
+        insert into bi_worksheet values
+        (#{worksheet_id},#{project_id},#{worksheet_idx},#{worksheet_name},#{worksheet_titlte},
+         #{worksheet_titlte_css},#{worksheet_type},#{worksheet_subtype},#{legends},
+         #{features,jdbcType=LONGVARCHAR,javaType=com.datacube.pojo.Features.Features,typeHandler=com.datacube.pojo.JSONHandler},
+         #{css},#{insert_user},#{insert_time},#{update_user},#{update_time},#{status})
+    </insert>
+
+</mapper>     
+    

@@ -1,0 +1,42 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list />
+  </option>
+  <option name="httpMethod" value="GET" />
+  <option name="urlBase" value="http://localhost:9001" />
+  <option name="urlPath" value="/zuul-mysql/dccp/bi/project/preview" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="*/*" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="project_id" />
+        <option name="value" value="Test02" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="file_id" />
+        <option name="value" value="null" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="limit" />
+        <option name="value" value="100" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="false" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value="" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>
