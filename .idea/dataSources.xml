@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="dccp@localhost" uuid="9d90557e-eacc-4e64-84cc-1e437fd30528">
-      <driver-ref>mysql</driver-ref>
+    <data-source source="LOCAL" name="MySQL - dccp@localhost" uuid="9d90557e-eacc-4e64-84cc-1e437fd30528">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/dccp</jdbc-url>

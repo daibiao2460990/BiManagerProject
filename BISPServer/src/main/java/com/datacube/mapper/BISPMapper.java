@@ -6,6 +6,8 @@ import com.datacube.pojo.DatabaseSource;
 import com.datacube.pojo.featurelist.Feature_list;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 
 /**
  * @author Dale
@@ -22,5 +24,16 @@ public interface BISPMapper {
 
     void biFeatureSave(Feature_list features);
 
+    void unique_numUpdate(Feature_list lists);
+
+    List<Feature_list> allFeaturesQuery(String project_id);
+
+    List<Feature_list> numFeaturesQuery(String project_id);
+
+    List<Feature_list> catFeaturesQuery(String project_id);
+
     void biWorksheetSave(BiWorksheet biWorksheet);
+
+
+
 }

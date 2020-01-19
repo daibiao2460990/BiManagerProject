@@ -20,10 +20,9 @@ Cache-Control: no-cache
 
 
 ###
-GET http://192.168.1.7:8084/bi/feature/list?project_id=bitest01
+GET http://192.168.1.7:8084/bi/feature/list?project_id=bitest01&feature_type=NUM
 Accept: */*
 Cache-Control: no-cache
-
 ###
 
 POST http://192.168.1.7:8084/bi/worksheet/features

@@ -38,6 +38,14 @@
         <result column="update_time" property="update_time" jdbcType="VARCHAR" />
     </resultMap>
 
+    <resultMap id="BiFeatureResultMap" type="com.datacube.pojo.featurelist.Feature_list" >
+        <result column="project_id" property="project_id" jdbcType="VARCHAR" />
+        <result column="feature_idx" property="feature_idx" jdbcType="INTEGER" />
+        <result column="feature_name" property="feature_name" jdbcType="VARCHAR" />
+        <result column="data_type" property="data_type" jdbcType="VARCHAR" />
+        <result column="unique_num" property="unique_num" jdbcType="INTEGER" />
+    </resultMap>
+
     
     <insert id="saveProjectInfo" parameterType="com.datacube.pojo.CreateProject">
         insert into project values (#{project_id},#{project_name},null,null,null,null,null,null,null,null,null,null,null,null,null,#{template_idx})
@@ -56,6 +64,22 @@
         insert into bi_feature values
         (#{project_id},null,#{feature_name},#{data_type},#{unique_num},null,null,null,null)
     </insert>
+
+    <update id="unique_numUpdate" parameterType="com.datacube.pojo.featurelist.Feature_list">
+        update bi_feature set unique_num = #{unique_num} where project_id=#{project_id} and feature_name = #{feature_name}
+    </update>
+
+    <select id="allFeaturesQuery" parameterType="com.datacube.pojo.featurelist.Feature_list" resultMap="BiFeatureResultMap">
+        select * from bi_feature where project_id = #{project_id}
+    </select>
+
+    <select id="numFeaturesQuery" parameterType="com.datacube.pojo.featurelist.Feature_list" resultMap="BiFeatureResultMap">
+        select * from bi_feature where project_id = #{project_id} AND data_type IN ('INT','DOUBLE','FLOAT')
+    </select>
+
+    <select id="catFeaturesQuery" parameterType="com.datacube.pojo.featurelist.Feature_list" resultMap="BiFeatureResultMap">
+        select * from bi_feature where project_id = #{project_id} AND data_type IN ('VARCHAR','TIME','TIMESTAMP')
+    </select>
 
     <insert id="biWorksheetSave" parameterType="com.datacube.pojo.BiWorksheet" >
         insert into bi_worksheet values

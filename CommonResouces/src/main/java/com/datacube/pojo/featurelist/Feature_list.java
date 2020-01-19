@@ -15,7 +15,7 @@ public class Feature_list {
     private int feature_idx;
     private String feature_name;
     private String data_type;
-    private Long unique_num;
+    private int unique_num;
 
     public void setFeature_idx(int feature_idx) {
          this.feature_idx = feature_idx;
@@ -46,11 +46,11 @@ public class Feature_list {
         this.project_id = project_id;
     }
 
-    public Long getUnique_num() {
+    public int getUnique_num() {
         return unique_num;
     }
 
-    public void setUnique_num(Long unique_num) {
+    public void setUnique_num(int unique_num) {
         this.unique_num = unique_num;
     }
 }

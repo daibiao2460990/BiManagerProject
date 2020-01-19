@@ -108,9 +108,12 @@ object SparkTest {
   }
 
 
-  def getFeatureUnique(project_id: String,featureName: String): Feature_list ={
+  def getFeatureUnique(project_id: String,featureNameList: util.List[String]): util.HashMap[String,Integer] ={
 
-    val features = new Feature_list
+    var featureNames = scala.collection.mutable.Buffer[String]()
+    featureNames = featureNameList.asScala
+    val unique_numMap = new java.util.HashMap[String,Integer]
+
     //本地模式运行,便于测试
     val sparkConf = new SparkConf()
       .setAppName("getFeatureList")
@@ -129,20 +132,21 @@ object SparkTest {
 
     //从数据源获取数据
     val hBaseRDD = sc.newAPIHadoopRDD(hBaseConf,classOf[TableInputFormat],classOf[ImmutableBytesWritable],classOf[Result])
-
+    val hBaseRDDCache = hBaseRDD.cache()
     //因为需要查询的数据列数是未知的,暂时采用每次查询两列的方式,一列是行键(index),一列数据,
-      val df = hBaseRDD.map(x =>
+    featureNames.foreach { featureName=>
+      val df = hBaseRDDCache.map(x =>
         Bytes.toString(x._2.getValue(Bytes.toBytes("info"), Bytes.toBytes(featureName)))
       ).toDF(featureName)
 
-    def unique_num = df.distinct().count()
-    println(unique_num)
-    features.setUnique_num(unique_num)
+      def unique_num = df.distinct().count()
+      unique_numMap.put(featureName,unique_num.toInt)
 
+    }
     spark.stop()
     sc.stop()
 
-    features
+    unique_numMap
   }
 
 

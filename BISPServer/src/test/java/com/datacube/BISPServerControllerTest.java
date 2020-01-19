@@ -20,7 +20,7 @@ public class BISPServerControllerTest {
     @Test
     public void createProjectTest(){
 
-        String url = "http://localhost:8084/bi/project/create";
+        String url = "http://192.168.1.7:8084/bi/project/create";
 
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("project_name", "Test01");
@@ -38,13 +38,13 @@ public class BISPServerControllerTest {
     @Test
     public void databaseSourceSaveTest(){
 
-        String url = "http://localhost:8084/bi/project/db/data";
+        String url = "http://192.168.1.7:8084/bi/project/db/data";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("project_id", "Test02");
         params.add("dialect", "mysql");
         params.add("database", "dccp");
-        params.add("host", "localhost");
+        params.add("host", "192.168.1.7");
         params.add("port", "3306");
         params.add("user", "root");
         params.add("password", "root");
@@ -64,7 +64,7 @@ public class BISPServerControllerTest {
     @Test
     public void dataPreviewTest(){
 
-        String url = "http://localhost:8084/bi/project/preview";
+        String url = "http://192.168.1.7:8084/bi/project/preview";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("project_id", "BiTest");
@@ -84,7 +84,7 @@ public class BISPServerControllerTest {
     @Test
     public void getAllDataTest(){
 
-        String url = "http://localhost:8084/bi/project/db/alldata";
+        String url = "http://192.168.1.7:8084/bi/project/db/alldata";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("project_id", "bitest");
@@ -101,9 +101,29 @@ public class BISPServerControllerTest {
 
 
     @Test
+    public void getFeatureListTest(){
+
+        String url = "http://192.168.1.7:8084/bi/feature/list";
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("project_id", "bitest");
+        params.add("feature_type", "NUM");
+        //params.add("feature_type", "CAT");
+        
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(url,
+                HttpMethod.POST,
+                new HttpEntity<>(params,null),
+                String.class);
+
+        System.out.println("result: "+response.getBody());
+    }
+
+
+    @Test
     public void workSheetFeatureTest(){
 
-        String url = "http://localhost:8084/bi/worksheet/features";
+        String url = "http://192.168.1.7:8084/bi/worksheet/features";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 

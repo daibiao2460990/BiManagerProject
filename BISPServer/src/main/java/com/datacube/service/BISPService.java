@@ -63,14 +63,29 @@ import java.util.*;
         bispMapper.biFeatureSave(features);
     }
 
-    public Long getUniqueNum(String project_id,String featureName) {
+    public Map<String,Integer> getUniqueNum(String project_id,List<String> featureNameList) {
 
-        Feature_list features = SparkTest.getFeatureUnique(project_id,featureName);
-
-        return  features.getUnique_num();
+        return SparkTest.getFeatureUnique(project_id,featureNameList);
     }
 
+    //更新unique_num
+    public void unique_numUpdate(Feature_list lists) {
 
+        bispMapper.unique_numUpdate(lists);
+    }
+    //查询更新后的feature_list
+    public List<Feature_list> allFeaturesQuery(String project_id) {
+
+        return bispMapper.allFeaturesQuery(project_id);
+    }
+    public List<Feature_list> numFeaturesQuery(String project_id) {
+
+       return bispMapper.numFeaturesQuery(project_id);
+    }
+    public List<Feature_list> catFeaturesQuery(String project_id) {
+
+        return bispMapper.catFeaturesQuery(project_id);
+    }
 
 
     public void biWorksheetSave(BiWorksheet biWorksheet) {
@@ -246,5 +261,7 @@ import java.util.*;
         return featureResult;
 
     }
+
+
 
 }

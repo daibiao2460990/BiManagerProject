@@ -216,7 +216,8 @@ public class BISPController {
     public FeatureListResult getFeatureList(GetFeatureListParm getFeatureListParm) {
 
         String project_id = getFeatureListParm.getProject_id();
-        List<Feature_list> feature_list = new ArrayList<>();
+        List<Feature_list> feature_list = bispService.allFeaturesQuery(project_id);
+        List<String> featureNameList = new ArrayList<>();
 
         DatabaseSource databaseSource = bispService.databaseSourceQuery(project_id,null);
 
@@ -243,25 +244,40 @@ public class BISPController {
                     Feature_list features = new Feature_list();
                     //获取数据的列名(即特征名称)
                     String feature_name = rsmd.getColumnName(i);
+                    //列名放入到featureNameList中一起同Spark查询去查数
+                    featureNameList.add(feature_name);
+
                     //获取数据的特征数据类型
                     String data_type = rsmd.getColumnTypeName(i);
-                    //查询去重数
-                    Long unique_name = 0L;
-                    if(!"PassengerId".equals(feature_name)) {
-                        unique_name = bispService.getUniqueNum(project_id, feature_name);
-                    }else{
-                        unique_name = 0L;
-                    }
+
                     //将获取的特这参数放到feature_list对象中
                     features.setFeature_name(feature_name);
                     features.setData_type(data_type);
                     features.setProject_id(project_id);
-                    features.setUnique_num(unique_name);
 
-                    //biFeature保存到数据库中
-                    bispService.biFeatureSave(features);
+                    //如果查询结果为空,则将features保存到数据库中
+                    if(feature_list.size()==0) {
+                        bispService.biFeatureSave(features);
+                    }
 
-                    feature_list.add(features);
+                }
+                //查询去重数
+                Map<String,Integer> unique_nameMap;
+                unique_nameMap = bispService.getUniqueNum(project_id,featureNameList);
+                //前面只保存了列名类型等,通过一次性(一次性查找速度更快)查询所有unique_num后再update数据库内容
+                Set<Map.Entry<String, Integer>> entries = unique_nameMap.entrySet();
+                for(Map.Entry<String, Integer> entry : entries) {
+                    Feature_list lists = new Feature_list();
+                    lists.setProject_id(project_id);
+                    lists.setFeature_name(entry.getKey());
+                    lists.setUnique_num(entry.getValue());
+
+                    bispService.unique_numUpdate(lists);
+                }
+                if("NUM".equals(getFeatureListParm.getFeature_type())) {
+                    feature_list = bispService.numFeaturesQuery(project_id);
+                }else{
+                    feature_list = bispService.catFeaturesQuery(project_id);
                 }
 
             } catch (Exception e) {
@@ -269,15 +285,17 @@ public class BISPController {
             } finally {
                 JDBCUtils.close(rs, ps, conn);
             }
+            FeatureListResult featureListResult = new FeatureListResult();
+            featureListResult.setFeature_list(feature_list);
+            featureListResult.setCode(0);
+            featureListResult.setTotal_num(feature_list.size());
+
+            return featureListResult;
+
         }else {
             return new FeatureListResult();
         }
-        FeatureListResult featureListResult = new FeatureListResult();
-        featureListResult.setFeature_list(feature_list);
-        featureListResult.setCode(0);
-        featureListResult.setTotal_num(feature_list.size());
 
-        return featureListResult;
     }
 
 
