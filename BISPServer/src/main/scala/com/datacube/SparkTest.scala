@@ -82,7 +82,7 @@ object SparkTest {
     val result = spark.sql(sql)
     //将计算结果进行缓存
     //result.show()
-    //result.toJSON.show()
+    //result.toJSON("feature")
 
     val resultCache = result.cache()
 
