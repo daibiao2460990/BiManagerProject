@@ -18,9 +18,6 @@ public class BiWorksheet {
     private String worksheet_titlte_css;
     private char worksheet_type;
     private char worksheet_subtype;
-    /*private JSON legends;
-    private JSON features;
-    private JSON css;*/
     private String legends;
     private Features features;
     private String css;

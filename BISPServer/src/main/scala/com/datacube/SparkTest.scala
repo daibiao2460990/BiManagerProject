@@ -73,20 +73,25 @@ object SparkTest {
       //获取到新的result的后,用它代替原来的allTab,起到更新数据防止表名重复的作用
       groupDf.createOrReplaceTempView("allTab")
     }
+
+
     //将读取的所以列缓存
     val groupDfCache = groupDf.cache()
     groupDfCache.createTempView("featureTab")
     //引入java传过来的sql语句进行结果计算,sql中默认表名为如上的featureTab
     val result = spark.sql(sql)
     //将计算结果进行缓存
-    result.show()
+    //result.show()
+    //result.toJSON.show()
+
     val resultCache = result.cache()
 
     val rows = resultCache.count().toInt
-    //这里rows太大的话运行时间会很长待优化
+
     for(i<- 1 to rows) {
       //获取结果作为返回值,存入到map中
       val resultMap = new java.util.HashMap[String, java.lang.Object]()
+
       nameList.foreach { name =>
         //将sum_Age转换为sum(Age)的形式,不带计算的如Sex,直接使用
         if(name.split("_").length==2) {
@@ -97,14 +102,18 @@ object SparkTest {
         }else{
           resultMap.put(name,resultCache.select(name).takeAsList(i).get(i-1).get(0).getClass+"_"+resultCache.select(name).takeAsList(i).get(i-1).get(0))
         }
+
       }
       featuresList.add(resultMap)
     }
+
     featureData.setFeature(featuresList)
 
     spark.stop()
     sc.stop()
+
     featureData
+
   }
 
 
@@ -134,15 +143,22 @@ object SparkTest {
     val hBaseRDD = sc.newAPIHadoopRDD(hBaseConf,classOf[TableInputFormat],classOf[ImmutableBytesWritable],classOf[Result])
     val hBaseRDDCache = hBaseRDD.cache()
     //因为需要查询的数据列数是未知的,暂时采用每次查询两列的方式,一列是行键(index),一列数据,
+
     featureNames.foreach { featureName=>
       val df = hBaseRDDCache.map(x =>
         Bytes.toString(x._2.getValue(Bytes.toBytes("info"), Bytes.toBytes(featureName)))
       ).toDF(featureName)
 
-      def unique_num = df.distinct().count()
-      unique_numMap.put(featureName,unique_num.toInt)
+      //df.createOrReplaceTempView("tab")
+      //val df1 = spark.sql("select count(distinct("+featureName+")) as unique_num from tab")
 
+      val unique_num = df.distinct().count()
+      //val unique_num = df1.select("unique_num").takeAsList(1).get(0).get(0).toString.toInt
+
+      unique_numMap.put(featureName,unique_num.toInt)
     }
+
+
     spark.stop()
     sc.stop()
 

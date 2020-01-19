@@ -245,8 +245,9 @@ public class BISPController {
                     //获取数据的列名(即特征名称)
                     String feature_name = rsmd.getColumnName(i);
                     //列名放入到featureNameList中一起同Spark查询去查数
-                    featureNameList.add(feature_name);
-
+                    if(!"PassengerId".equals(feature_name)) {
+                        featureNameList.add(feature_name);
+                    }
                     //获取数据的特征数据类型
                     String data_type = rsmd.getColumnTypeName(i);
 
